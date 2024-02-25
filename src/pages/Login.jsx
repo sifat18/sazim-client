@@ -39,7 +39,7 @@ export const Login = () => {
   });
   return (
     <>
-      <BorderLayout width={25}>
+      <BorderLayout width={25} className={"text-center"}>
         <>
           {" "}
           <h2 className="text-center" style={{ marginTop: "-4rem" }}>
