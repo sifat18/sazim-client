@@ -5,6 +5,7 @@ import { Signup } from "../pages/Signup";
 import App from "../App";
 import NotFound from "../pages/NotFound";
 import { Home } from "../pages/Home";
+import { CreateProduct } from "../pages/CreateProduct";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/create-product",
+        element: <CreateProduct />,
       },
     ],
   },

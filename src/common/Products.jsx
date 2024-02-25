@@ -9,7 +9,7 @@ export const Products = ({ item }) => {
  
   return (
     <div >
-      <BorderLayout width={25} marginTop="2rem">
+      <BorderLayout width={100} marginTop="2rem">
         <div className="row">
           <h6 className="m-3 col-9">{item?.title}</h6>
           <div className=" mt-3 col-2" onClick={(e)=>{
