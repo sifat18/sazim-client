@@ -4,8 +4,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import DefaultInput from "../common/DefaultInput";
 import PrimaryButton from "../common/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const navigate = useNavigate();
+
   const validationSchema = yup.object({
     email: yup
       .string()
@@ -13,6 +16,7 @@ export const Login = () => {
       .required("Email is required"),
     password: yup.string().required("Password is required"),
   });
+
   const {
     setFieldValue,
     values,
@@ -94,7 +98,13 @@ export const Login = () => {
             </div>
             <p className="mt-4">
               Do you have an Account?{" "}
-              <span style={{ color: "#8A2BE2", fontWeight: "600" }}>
+              <span
+                style={{ color: "#8A2BE2", fontWeight: "600" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/signup");
+                }}
+              >
                 Signup
               </span>
             </p>
