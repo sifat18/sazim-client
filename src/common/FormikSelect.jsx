@@ -5,7 +5,7 @@ import Select from "react-select";
 import { customStyles, customStylesLarge } from "../utility/selectCustomStyle";
 import FormikError from "./FormikError";
 
-const FormikSelect = (props) => {
+export const FormikSelect = (props) => {
   const target = useRef(null);
   const [isFocusForm, setIsFocusForm] = useState(false);
   const {
@@ -38,7 +38,7 @@ const FormikSelect = (props) => {
   return (
     <div className="form-container" id={name}>
       <div
-        className="formik-select-wrapper"
+        className="mb-3"
         ref={target}
         onFocus={() => setIsFocusForm(true)}
         onBlur={() => setIsFocusForm(false)}
@@ -76,9 +76,8 @@ const FormikSelect = (props) => {
           </span>
         )}
       </div>
-      <FormikError errors={errors} name={name} touched={touched} />
+      <FormikError  errors={errors} name={name} touched={touched} />
     </div>
   );
 };
 
-export default FormikSelect;
