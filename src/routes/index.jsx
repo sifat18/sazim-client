@@ -4,7 +4,7 @@ import { Login } from "../pages/Login";
 import { Signup } from "../pages/Signup";
 import App from "../App";
 import NotFound from "../pages/NotFound";
-import Home from "../pages/Home";
+import { Home } from "../pages/Home";
 
 export const router = createBrowserRouter([
   {
