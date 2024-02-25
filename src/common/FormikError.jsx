@@ -12,11 +12,12 @@ const FormikError = ({ errors, name, touched }) => {
       style={{
         fontSize: "12px",
         fontWeight: 400,
-        lineHeight: "18px",
+        lineHeight: "10px",
         width: "100%",
-        marginTop: "5px",
-        marginBottom: "0",
+        marginTop: "-7px",
+        marginBottom: "15px",
         textAlign: "left",
+        color: "red",
       }}
       className={errors?.[name] || errorMasseage ? "error" : "d-none"}
     >
@@ -31,7 +32,14 @@ const FormikError = ({ errors, name, touched }) => {
 
       {errors && errorMasseage && touched && touchedMasseage ? (
         <>
-          <Error sx={{ fontSize: "14px", position: "relative", top: "-1px" }} />{" "}
+          <Error
+            sx={{
+              fontSize: "14px",
+              position: "relative",
+              top: "-1px",
+              color: "red",
+            }}
+          />{" "}
           {errorMasseage.value || errorMasseage}
         </>
       ) : (
