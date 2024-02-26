@@ -4,11 +4,14 @@ import { BorderLayout } from "./BorderLayout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IConfirmModal from "./IConfirmModal";
 
-export const Products = ({ item }) => {
+export const Products = ({ item,click }) => {
     const [showFullDescription, setShowFullDescription] = useState(false);
- 
+
   return (
-    <div >
+    <div  onClick={()=>{
+      click(item)
+     
+    }}>
       <BorderLayout width={100} marginTop="2rem">
         <div className="row">
           <h6 className="m-3 col-9">{item?.title}</h6>

@@ -67,7 +67,6 @@ export const FormikSelect = (props) => {
         />
         {setClear && (
           <span
-            // class="fa fa-times-circle select-cross-icon"
             onClick={() => {
               setClear(name, "");
             }}

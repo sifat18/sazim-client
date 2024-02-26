@@ -6,6 +6,9 @@ import App from "../App";
 import NotFound from "../pages/NotFound";
 import { Home } from "../pages/Home";
 import { CreateProduct } from "../pages/CreateProduct";
+import {EditProduct} from "../pages/EditProduct";
+import { AllProducts } from "../pages/AllProducts";
+import { ProductView } from "../pages/ProductView";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/All",
+        element: <AllProducts />,
       },
 
       {
@@ -28,6 +35,14 @@ export const router = createBrowserRouter([
       {
         path: "/create-product",
         element: <CreateProduct />,
+      },
+      {
+        path: "/edit/:productName",
+        element: <EditProduct />,
+      },
+      {
+        path: "/buy-rent/:productName",
+        element: <ProductView />,
       },
     ],
   },

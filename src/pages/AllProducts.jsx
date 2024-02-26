@@ -5,13 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Products } from "../common/Products";
 import PrimaryButton from "../common/PrimaryButton";
 
-export const Home = () => {
+export const AllProducts = () => {
   const navigate = useNavigate();
-  const click=(item)=>{
-    console.log({item});
-    
-    navigate(`/edit/${item?.title}`,{ state: { product: item }})
-  }
+
   const [products, setProducts] = useState([
     {
       title: "Smartwatch X1",
@@ -64,7 +60,10 @@ export const Home = () => {
     //   viewDetails: "2.5M",
     // },
   ]);
+const click=(item)=>{
+    navigate(`/buy-rent/${item?.title}`,{ state: { product: item }})
 
+}
   return (
     <div className="w-25 mx-auto">
       {/* <BorderLayout width={25}> */}
@@ -73,7 +72,7 @@ export const Home = () => {
           className="text-center text-uppercase"
           style={{ paddingTop: "7rem" }}
         >
-          My Products
+          All Products
         </h2>
         {products?.length > 0
           ? products?.map((product) => (

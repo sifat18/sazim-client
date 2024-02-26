@@ -36,12 +36,12 @@ export const CreateProduct = () => {
     setValues,
   } = useFormik({
     initialValues: {
-        rent:"",
-        categories:"",
-        title:"",
-        price:"",
-        description:"",
-        dayType:"",
+      rent: "",
+      categories: "",
+      title: "",
+      price: "",
+      description: "",
+      dayType: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -172,7 +172,6 @@ export const CreateProduct = () => {
               placeholder=" "
               value={values?.price}
               name="price"
-             
               type="number"
               onChange={(e) => {
                 setFieldValue("price", e.target.value);
@@ -181,54 +180,54 @@ export const CreateProduct = () => {
               touched={touched}
             />
             <div className="row">
-                <div className="col-6 mt-1">
-                    <label htmlFor="">Rent</label>
+              <div className="col-6 mt-1">
+                <label htmlFor="">Rent</label>
                 <DefaultInput
-              classes=""
-              placeholder=" "
-              value={values?.rent}
-              name="rent"
-              inputClasses='w-50'
-              type="number"
-              onChange={(e) => {
-                setFieldValue("rent", e.target.value);
-              }}
-              errors={errors}
-              touched={touched}
-            />
-                </div>
-                <div className="col-6 mt-4 pt-3" >
+                  classes=""
+                  placeholder=" "
+                  value={values?.rent}
+                  name="rent"
+                  inputClasses="w-50"
+                  type="number"
+                  onChange={(e) => {
+                    setFieldValue("rent", e.target.value);
+                  }}
+                  errors={errors}
+                  touched={touched}
+                />
+              </div>
+              <div className="col-6 mt-4 pt-3">
                 <FormikSelect
-                          placeholder="Select an option "
-                          classes=""
-                          styles={customStyles}
-                          name="dayType"
-                          options={ []}
-                          value={values?.dayType}
-                          onChange={(valueOption) => {
-                            setFieldValue("dayType", valueOption);
-                          }}
-                          errors={errors}
-                          touched={touched}
-                        />
-                </div>
+                  placeholder="Select an option "
+                  classes=""
+                  styles={customStyles}
+                  name="dayType"
+                  options={[]}
+                  value={values?.dayType}
+                  onChange={(valueOption) => {
+                    setFieldValue("dayType", valueOption);
+                  }}
+                  errors={errors}
+                  touched={touched}
+                />
+              </div>
             </div>
           </>
         )}
 
-{currentStep === 4 && (
+        {currentStep === 4 && (
           <>
             <h4 className="text-center " style={{ paddingTop: "7rem" }}>
               Summary{" "}
             </h4>
-         <div className="ml-2">
-            <p>Title: {values?.title}</p>
-            <p>Categories: {values?.categories}</p>
-            <p>Description: {values?.description}</p>
-            <p>Price: {values?.price}, To rent:{values?.rent} {values?.dayType}</p>
-         
-         </div>
-            
+            <div className="ml-2">
+              <p>Title: {values?.title}</p>
+              <p>Categories: {values?.categories}</p>
+              <p>Description: {values?.description}</p>
+              <p>
+                Price: {values?.price}, To rent:{values?.rent} {values?.dayType}
+              </p>
+            </div>
           </>
         )}
 
@@ -269,24 +268,24 @@ export const CreateProduct = () => {
           </div>
         )}
         {currentStep === steps.length - 1 && (
-         <div
-         style={{
-           marginLeft: "20rem",
-           marginTop: currentStep ? "-2.7rem" : "",
-         }}
-       >
-         <PrimaryButton
-           label={"Submit"}
-           type={"submit"}
-           className={" mx-auto border rounded font-weight-bold"}
-           customStyle={{
-             backgroundColor: "#8A2BE2",
-             color: "white",
-             width: "10rem",
-             padding: "0.7rem",
-           }}
-         />
-       </div>
+          <div
+            style={{
+              marginLeft: "20rem",
+              marginTop: currentStep ? "-2.7rem" : "",
+            }}
+          >
+            <PrimaryButton
+              label={"Submit"}
+              type={"submit"}
+              className={" mx-auto border rounded font-weight-bold"}
+              customStyle={{
+                backgroundColor: "#8A2BE2",
+                color: "white",
+                width: "10rem",
+                padding: "0.7rem",
+              }}
+            />
+          </div>
         )}
       </form>
       <div style={{ marginLeft: "20rem" }}></div>
