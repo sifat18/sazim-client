@@ -4,7 +4,7 @@ import { BorderLayout } from "./BorderLayout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IConfirmModal from "./IConfirmModal";
 
-export const Products = ({ item,click }) => {
+export const Products = ({ item,click,deleteBtn=false }) => {
     const [showFullDescription, setShowFullDescription] = useState(false);
 
   return (
@@ -15,7 +15,7 @@ export const Products = ({ item,click }) => {
       <BorderLayout width={100} marginTop="2rem">
         <div className="row">
           <h6 className="m-3 col-9">{item?.title}</h6>
-          <div className=" mt-3 col-2" onClick={(e)=>{
+         {deleteBtn ? <div className=" mt-3 col-2" onClick={(e)=>{
             e.preventDefault()
             let confirmObject = {
               closeOnClickOutside: false,
@@ -30,7 +30,7 @@ export const Products = ({ item,click }) => {
             
             }}>
             <DeleteIcon />
-          </div>
+          </div>:null}
         </div>
         <div className="m-3">
           <p className="text-secondary">
@@ -45,7 +45,10 @@ export const Products = ({ item,click }) => {
             {!showFullDescription && (
               <span
                 className="text-primary"
-                onClick={() => setShowFullDescription(true)}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setShowFullDescription(true)}}
               >
                 More Details
               </span>

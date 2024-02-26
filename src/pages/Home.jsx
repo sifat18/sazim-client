@@ -8,7 +8,6 @@ import PrimaryButton from "../common/PrimaryButton";
 export const Home = () => {
   const navigate = useNavigate();
   const click=(item)=>{
-    console.log({item});
     
     navigate(`/edit/${item?.title}`,{ state: { product: item }})
   }
@@ -77,7 +76,7 @@ export const Home = () => {
         </h2>
         {products?.length > 0
           ? products?.map((product) => (
-              <Products item={product} key={product?.title} click={click}/>
+              <Products item={product} key={product?.title} click={click} deleteBtn={true}/>
             ))
           : null}
           <div style={{marginLeft:"20rem"}}> 

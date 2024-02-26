@@ -9,6 +9,7 @@ import { CreateProduct } from "../pages/CreateProduct";
 import {EditProduct} from "../pages/EditProduct";
 import { AllProducts } from "../pages/AllProducts";
 import { ProductView } from "../pages/ProductView";
+import OverView from "../pages/OverView";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/overview",
+        element: <OverView />,
       },
       {
         path: "/create-product",
