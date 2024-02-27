@@ -28,7 +28,6 @@ export const AllProducts = () => {
     }
   `;
   const { loading, error, data } = useQuery(GET_PRODUCTS);
-  console.log({ data });
 
   const click = (item) => {
     navigate(`/buy-rent/${item?.title}`, { state: { product: item } });
