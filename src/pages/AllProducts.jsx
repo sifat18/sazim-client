@@ -16,14 +16,15 @@ export const AllProducts = () => {
         price
         rent
         rentType {
+          id
           label
         }
         description
         createdAt
         categories {
+          id
           name
         }
-        createdBy
       }
     }
   `;
@@ -44,20 +45,6 @@ export const AllProducts = () => {
             <Products item={product} key={product?.title} click={click} />
           ))
         : null}
-      <div style={{ marginLeft: "14rem" }}>
-        <PrimaryButton
-          label={"Add Product"}
-          type={"button"}
-          onClick={() => navigate("/create-product")}
-          className={"mt-5 mx-auto border rounded font-weight-bold"}
-          customStyle={{
-            backgroundColor: "#8A2BE2",
-            color: "white",
-            width: "10rem",
-            padding: "0.7rem",
-          }}
-        />
-      </div>
     </div>
   );
 };
