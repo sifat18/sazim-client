@@ -11,30 +11,22 @@ export const Home = () => {
   const { id } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const GET_PRODUCTS = gql`
-    query Query($userId: Int!) {
+    query User($userId: Int!) {
       user(id: $userId) {
-        id
-        email
-        firstName
-        lastName
-        password
-        address
-        phone
-        createdAt
         products {
           id
           title
           price
           rent
-          rentType {
-            id
-            label
-          }
           description
           createdAt
           categories {
             id
             name
+          }
+          rentType {
+            id
+            label
           }
         }
       }

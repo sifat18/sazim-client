@@ -39,14 +39,14 @@ export const CreateProduct = () => {
   const [rentTypes, setRentTypes] = useState([]);
   const navigate = useNavigate();
   const ADD_PRODUCT = gql`
-    mutation Mutation(
+    mutation CreateProduct(
       $title: String!
       $price: Float!
       $rent: Float!
       $rentId: Int!
       $description: String!
       $categoryIds: [Int!]!
-      $createdBy: Int
+      $createdBy: Int!
     ) {
       createProduct(
         title: $title
@@ -58,6 +58,23 @@ export const CreateProduct = () => {
         createdBy: $createdBy
       ) {
         id
+        title
+        price
+        rent
+        rentType {
+          id
+          label
+        }
+        description
+        createdAt
+        user {
+          id
+          email
+        }
+        categories {
+          id
+          name
+        }
       }
     }
   `;
@@ -81,7 +98,7 @@ export const CreateProduct = () => {
   const { data } = useQuery(GET_Categories);
   const { data: Rentyps } = useQuery(GET_Rentyps);
   const [addproduct, { data: Product }] = useMutation(ADD_PRODUCT);
-
+  console.log({ Product });
   const {
     setFieldValue,
     values,
@@ -143,7 +160,7 @@ export const CreateProduct = () => {
     }
   }, [data, Rentyps]);
   useEffect(() => {
-    if (Product?.addproduct?.id) {
+    if (Product?.createProduct?.id) {
       navigate("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
