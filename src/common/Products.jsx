@@ -3,10 +3,20 @@ import { useState } from "react";
 import { BorderLayout } from "./BorderLayout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IConfirmModal from "./IConfirmModal";
+import { gql, useMutation } from "@apollo/client";
 
 export const Products = ({ item, click, deleteBtn = false }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const options = { day: "2-digit", month: "short", year: "numeric" };
+  const DELETE_PRODUCT = gql`
+    mutation Mutation($productId: Int!) {
+      deleteProduct(productId: $productId) {
+        id
+        title
+      }
+    }
+  `;
+  const [removeProduct] = useMutation(DELETE_PRODUCT);
 
   return (
     <div
@@ -22,11 +32,16 @@ export const Products = ({ item, click, deleteBtn = false }) => {
               className=" mt-3 col-2"
               onClick={(e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 let confirmObject = {
                   closeOnClickOutside: false,
                   message: "Are you sure you want to delete this product?",
                   yesAlertFunc: () => {
-                    // const payload = { }
+                    console.log(item?.id);
+                    removeProduct({
+                      variables: { productId: item?.id },
+                    });
+                    window.location.reload();
                   },
                   noAlertFunc: () => {},
                 };

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Products } from "../common/Products";
 import PrimaryButton from "../common/PrimaryButton";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 
 export const Home = () => {
@@ -32,10 +32,10 @@ export const Home = () => {
       }
     }
   `;
+
   const { loading, error, data } = useQuery(GET_PRODUCTS, {
     variables: { userId: id }, // Pass the user ID as a variable
   });
-  console.log({ data });
 
   const click = (item) => {
     navigate(`/edit/${item?.title}`, { state: { product: item } });
