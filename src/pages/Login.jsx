@@ -5,9 +5,14 @@ import * as yup from "yup";
 import DefaultInput from "../common/DefaultInput";
 import PrimaryButton from "../common/PrimaryButton";
 import { useNavigate } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/features/aurth/authSlice";
+import { useEffect } from "react";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validationSchema = yup.object({
     email: yup
@@ -16,6 +21,17 @@ export const Login = () => {
       .required("Email is required"),
     password: yup.string().required("Password is required"),
   });
+  const SIGN_IN = gql`
+    mutation Signin($email: String!, $password: String!) {
+      signin(email: $email, password: $password) {
+        id
+        email
+        firstName
+        lastName
+      }
+    }
+  `;
+  const [signin, { data, loading, error }] = useMutation(SIGN_IN);
 
   const {
     setFieldValue,
@@ -34,9 +50,25 @@ export const Login = () => {
     },
     onSubmit: (values) => {
       // Handle form submission logic here
-      console.log("Form submitted with values:", values);
+      signin({
+        variables: values,
+      });
     },
   });
+  useEffect(() => {
+    if (!loading && data?.signin?.id) {
+      dispatch(
+        setUser({
+          name: data?.signin?.firstName + " " + data?.signin?.lastName,
+          email: data?.signin?.email,
+          id: data?.signin?.id,
+        })
+      );
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, data]);
+
   return (
     <>
       <BorderLayout width={25} className={"text-center"}>

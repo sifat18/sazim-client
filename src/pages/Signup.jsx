@@ -6,6 +6,9 @@ import DefaultInput from "../common/DefaultInput";
 import PrimaryButton from "../common/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/features/aurth/authSlice";
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -65,6 +68,7 @@ export const Signup = () => {
       .required("Phone number is required"),
   });
   const [signup, { data, loading, error }] = useMutation(SIGN_UP);
+  const dispatch = useDispatch();
 
   const {
     setFieldValue,
@@ -90,9 +94,22 @@ export const Signup = () => {
       signup({
         variables: values,
       });
-      data?.signUp?.id && navigate("/");
     },
   });
+  useEffect(() => {
+    if (!loading && data?.signUp?.id) {
+      dispatch(
+        setUser({
+          name: data?.signUp?.firstName + " " + data?.signUp?.lastName,
+          email: data?.signUp?.email,
+          id: data?.signUp?.id,
+        })
+      );
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, data]);
+
   return (
     <>
       <BorderLayout width={25} className={"text-center"}>
