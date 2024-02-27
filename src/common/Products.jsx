@@ -37,7 +37,6 @@ export const Products = ({ item, click, deleteBtn = false }) => {
                   closeOnClickOutside: false,
                   message: "Are you sure you want to delete this product?",
                   yesAlertFunc: () => {
-                    console.log(item?.id);
                     removeProduct({
                       variables: { productId: item?.id },
                     });
