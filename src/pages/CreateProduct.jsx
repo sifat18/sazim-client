@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import DefaultInput from "../common/DefaultInput";
@@ -6,23 +6,81 @@ import PrimaryButton from "../common/PrimaryButton";
 import { FormikSelect } from "../common/FormikSelect";
 import { gray600, success500 } from "../utility/customColor";
 import { customStyles } from "./../utility/selectCustomStyle";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import { useSelector } from "react-redux";
 
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
 
 const validationSchema = Yup.object().shape({
   rent: Yup.number().required("Rent  is required"),
-  categories: Yup.string().required("Categories is required"),
+  categories: Yup.array().of(
+    Yup.object().shape({
+      label: Yup.string().required("Categories is required"),
+      value: Yup.string().required("Categories is required"),
+    })
+  ),
   title: Yup.string().required("Title is required"),
   price: Yup.number().required("Price is required"),
   description: Yup.string().required("description is required"),
-  dayType: Yup.string().required("dayType is required"),
+  dayType: Yup.object().shape({
+    label: Yup.string().required("dayType is required"),
+    value: Yup.string().required("dayType is required"),
+  }),
 });
 
 export const CreateProduct = () => {
+  const { id } = useSelector((state) => state.auth);
+  console.log({ id });
+
   const [currentStep, setCurrentStep] = useState(0);
-  //   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  const [rentTypes, setRentTypes] = useState([]);
+  const navigate = useNavigate();
+  const ADD_PRODUCT = gql`
+    mutation Mutation(
+      $title: String!
+      $price: Float!
+      $rent: Float!
+      $rentId: Int!
+      $description: String!
+      $categoryIds: [Int!]!
+      $createdBy: Int
+    ) {
+      createProduct(
+        title: $title
+        price: $price
+        rent: $rent
+        rentId: $rentId
+        description: $description
+        categoryIds: $categoryIds
+        createdBy: $createdBy
+      ) {
+        id
+      }
+    }
+  `;
+
+  const GET_Categories = gql`
+    query Query {
+      categories {
+        id
+        name
+      }
+    }
+  `;
+  const GET_Rentyps = gql`
+    query Query {
+      rentypes {
+        id
+        label
+      }
+    }
+  `;
+  const { data } = useQuery(GET_Categories);
+  const { data: Rentyps } = useQuery(GET_Rentyps);
+  const [addproduct, { data: Product }] = useMutation(ADD_PRODUCT);
 
   const {
     setFieldValue,
@@ -47,6 +105,17 @@ export const CreateProduct = () => {
     onSubmit: (values) => {
       console.log("Form submitted with values:", values);
       // Handle form submission logic here
+      addproduct({
+        variables: {
+          title: values?.title,
+          price: parseFloat(values?.price),
+          rent: parseFloat(values?.rent),
+          rentId: +values?.dayType?.value,
+          description: values?.description,
+          categoryIds: values?.categories?.map((item) => +item?.value),
+          createdBy: +id,
+        },
+      });
     },
   });
 
@@ -57,6 +126,28 @@ export const CreateProduct = () => {
   const handlePrev = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
+  useEffect(() => {
+    if (data?.categories?.length > 0) {
+      setCategories(
+        data?.categories?.map((item) => {
+          return { label: item?.name, value: item?.id };
+        })
+      );
+    }
+    if (Rentyps?.rentypes?.length > 0) {
+      setRentTypes(
+        Rentyps?.rentypes?.map((item) => {
+          return { ...item, value: item?.id };
+        })
+      );
+    }
+  }, [data, Rentyps]);
+  useEffect(() => {
+    if (Product?.addproduct?.id) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Product]);
 
   return (
     <div className="w-25 mx-auto">
@@ -127,12 +218,8 @@ export const CreateProduct = () => {
                 }),
               }}
               name="categories"
-              options={[
-                { label: "All", value: 0 },
-                { label: "All2", value: 1 },
-                { label: "All3", value: 3 },
-              ]}
-              value={values?.categories || { label: "All", value: 0 }}
+              options={categories?.length > 0 ? categories : []}
+              value={values?.categories}
               onChange={(valueOption) => {
                 setFieldValue("categories", valueOption);
               }}
@@ -149,8 +236,8 @@ export const CreateProduct = () => {
             </h4>
             <DefaultInput
               classes=""
-              placeholder=" "
               value={values?.description}
+              placeholder=" "
               name="description"
               type="textArea"
               rows={5}
@@ -202,7 +289,7 @@ export const CreateProduct = () => {
                   classes=""
                   styles={customStyles}
                   name="dayType"
-                  options={[]}
+                  options={rentTypes?.length > 0 ? rentTypes : []}
                   value={values?.dayType}
                   onChange={(valueOption) => {
                     setFieldValue("dayType", valueOption);
@@ -222,10 +309,16 @@ export const CreateProduct = () => {
             </h4>
             <div className="ml-2">
               <p>Title: {values?.title}</p>
-              <p>Categories: {values?.categories}</p>
+              <p>
+                Categories:{" "}
+                {values?.categories
+                  ?.map((category) => category?.label)
+                  .join(",")}
+              </p>
               <p>Description: {values?.description}</p>
               <p>
-                Price: {values?.price}, To rent:{values?.rent} {values?.dayType}
+                Price: {values?.price}, To rent:{values?.rent}{" "}
+                {values?.dayType?.label}
               </p>
             </div>
           </>

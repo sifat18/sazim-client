@@ -28,7 +28,7 @@ const DefaultInput = (props) => {
     autoFocusForm,
     maxLength,
     isParentFormContainerClass,
-    rows=1
+    rows = 1,
   } = props;
   // const number = type === "number" ? String(Number(value)) : value;
   const [isFocusForm, setIsFocusForm] = useState(false);
@@ -87,37 +87,40 @@ const DefaultInput = (props) => {
             </button>
           </div>
         )}
-        {type=== "textArea" ? <textarea
-               
-               value={value}
-               name={name}
-               placeholder={placeholder}
-               type={"textarea"}
-               disabled={disabled}
-               rows={rows || 1}
-               className={"form-control"}
-            />
-         :<input
-         // {...props}
-         id={id}
-         value={value}
-         name={name}
-         placeholder={type === "date" ? "dd/mm/yyyy" : placeholder}
-         type={type}
-         className={
-           inputClasses ? `form-control ${inputClasses}` : `form-control`
-         }
-         disabled={disabled}
-         min={min}
-         max={max}
-         maxLength={maxLength}
-         // data-date={value ? moment(value).format("DD-MMMM-YYYY") : placeholder}
-         data-date={value && moment(value).format("DD-MMMM-YYYY")}
-         onChange={onChange}
-         step={step}
-         onKeyDown={onKeyDown}
-         autoFocus={autoFocus}
-       />}
+        {type === "textArea" ? (
+          <textarea
+            value={value}
+            name={name}
+            placeholder={placeholder}
+            type={"textarea"}
+            disabled={disabled}
+            rows={rows || 1}
+            onChange={onChange}
+            className={"form-control"}
+          />
+        ) : (
+          <input
+            // {...props}
+            id={id}
+            value={value}
+            name={name}
+            placeholder={type === "date" ? "dd/mm/yyyy" : placeholder}
+            type={type}
+            className={
+              inputClasses ? `form-control ${inputClasses}` : `form-control`
+            }
+            disabled={disabled}
+            min={min}
+            max={max}
+            maxLength={maxLength}
+            // data-date={value ? moment(value).format("DD-MMMM-YYYY") : placeholder}
+            data-date={value && moment(value).format("DD-MMMM-YYYY")}
+            onChange={onChange}
+            step={step}
+            onKeyDown={onKeyDown}
+            autoFocus={autoFocus}
+          />
+        )}
       </div>
       <FormikError errors={errors} touched={touched} name={name} />
     </div>
