@@ -36,7 +36,9 @@ export const ProductView = () => {
   return (
     <form className="w-25 m-auto ">
       <h2 className="mt-5 pt-5">{product?.title}</h2>
-      <p>Categories: {product?.category}</p>
+      <p>
+        Categories: {product?.categories?.map((info) => info?.name).join(",")}
+      </p>
       <p>Price: {product?.price}</p>
       <p>{product?.description}</p>
       <div className="mt-5 pt-5 d-flex justify-content-end">
@@ -95,30 +97,30 @@ export const ProductView = () => {
                     label: "From Date",
                     id: "fromDate",
                     value: values?.fromDate,
-                    onChange: (e) =>{
-                    
-                   { // setRentalValues((prevValues) => ({
-                    //     ...prevValues,
-                    //     fromDate: e.target.value,
-                    //   })
-                    handleChange(e)
-                    setFieldValue('fromDate',e.target.value)
-                    }}
+                    onChange: (e) => {
+                      {
+                        // setRentalValues((prevValues) => ({
+                        //     ...prevValues,
+                        //     fromDate: e.target.value,
+                        //   })
+                        handleChange(e);
+                        setFieldValue("fromDate", e.target.value);
+                      }
+                    },
                   },
                   {
                     type: "date",
                     label: "To Date",
                     id: "toDate",
                     value: values?.toDate,
-                    onChange: (e) =>{
-                      setFieldValue('toDate',e.target.value)
-                      handleChange(e)
-                   
-                    
-                    // setRentalValues((prevValues) => ({
-                    //     ...prevValues,
-                    //     toDate: e.target.value,
-                    //   }))
+                    onChange: (e) => {
+                      setFieldValue("toDate", e.target.value);
+                      handleChange(e);
+
+                      // setRentalValues((prevValues) => ({
+                      //     ...prevValues,
+                      //     toDate: e.target.value,
+                      //   }))
                     },
                   },
                 ],
