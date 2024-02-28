@@ -5,7 +5,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IConfirmModal from "./IConfirmModal";
 import { gql, useMutation } from "@apollo/client";
 
-export const Products = ({ item, click, deleteBtn = false }) => {
+export const Products = ({
+  item,
+  click,
+  deleteBtn = false,
+  showInfo = true,
+}) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const options = { day: "2-digit", month: "short", year: "numeric" };
   const DELETE_PRODUCT = gql`
@@ -78,16 +83,18 @@ export const Products = ({ item, click, deleteBtn = false }) => {
             )}
           </p>
         </div>
-        <div className="row">
-          <p className="m-3 text-secondary col-7">
-            Date Posted:{" "}
-            {new Date(+item?.createdAt)?.toLocaleString("en-US", options)}
-          </p>
+        {showInfo && (
+          <div className="row">
+            <p className="m-3 text-secondary col-7">
+              Date Posted:{" "}
+              {new Date(+item?.createdAt)?.toLocaleString("en-US", options)}
+            </p>
 
-          <div className=" mt-3 col-4">
-            {parseInt(Math.random() * 10000)} views
+            <div className=" mt-3 col-4">
+              {parseInt(Math.random() * 10000)} views
+            </div>
           </div>
-        </div>
+        )}
       </BorderLayout>
     </div>
   );
