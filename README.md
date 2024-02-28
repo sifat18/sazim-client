@@ -17,3 +17,5 @@
 ### docker pull ibnsifat/teebay-client
 
 - expose port 3000 in localhost
+
+- [video](https://drive.google.com/file/d/1JdgWCSu1a77OPbY18SnJ8Jzel5y-BsPa/view?usp=sharing)
