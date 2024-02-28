@@ -1,10 +1,10 @@
 import { useState } from "react";
-import PrimaryButton from "../common/PrimaryButton";
 import { Products } from "../common/Products";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTION_PRODUCTS } from "./apiHelper";
+import TabButton from "../common/TabButton";
 
 const OverView = () => {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -24,58 +24,10 @@ const OverView = () => {
   return (
     <div>
       <div className="row w-100 ">
-        <PrimaryButton
-          label={"Bought"}
-          type={"button"}
-          onClick={() => openTab("tab1")}
-          className={"col-3 border rounded "}
-          customStyle={{
-            backgroundColor: "white",
-            color: "#8A2BE2",
-            //   width: "10rem",
-            padding: "0.6rem",
-            border: "1px solid #8A2BE2",
-          }}
-        />
-        <PrimaryButton
-          label={"Sold"}
-          type={"button"}
-          onClick={() => openTab("tab2")}
-          className={"col-3 border rounded "}
-          customStyle={{
-            backgroundColor: "white",
-            color: "#8A2BE2",
-            //   width: "10rem",
-            padding: "0.6rem",
-            border: "1px solid #8A2BE2",
-          }}
-        />
-        <PrimaryButton
-          label={"Borrowed"}
-          type={"button"}
-          onClick={() => openTab("tab3")}
-          className={"col-3 border rounded "}
-          customStyle={{
-            backgroundColor: "white",
-            color: "#8A2BE2",
-            //   width: "10rem",
-            padding: "0.6rem",
-            border: "1px solid #8A2BE2",
-          }}
-        />
-        <PrimaryButton
-          label={"Lent"}
-          type={"button"}
-          onClick={() => openTab("tab4")}
-          className={"col-3 border rounded "}
-          customStyle={{
-            backgroundColor: "white",
-            color: "#8A2BE2",
-            //   width: "10rem",
-            padding: "0.6rem",
-            border: "1px solid #8A2BE2",
-          }}
-        />
+        <TabButton label="Bought" onClick={() => openTab("tab1")} />
+        <TabButton label="Sold" onClick={() => openTab("tab2")} />
+        <TabButton label="Borrowed" onClick={() => openTab("tab3")} />
+        <TabButton label="Lent" onClick={() => openTab("tab4")} />
       </div>
       <div className=" w-25 mt-5 mx-auto">
         <div
