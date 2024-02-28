@@ -30,6 +30,7 @@ const OverView = () => {
         <TabButton label="Lent" onClick={() => openTab("tab4")} />
       </div>
       <div className=" w-25 mt-5 mx-auto">
+        {/* tab-1 */}
         <div
           className="tab-content"
           style={{ display: activeTab === "tab1" ? "block" : "none" }}
@@ -48,6 +49,7 @@ const OverView = () => {
                 ))
             : null}
         </div>
+        {/* tab-2 */}
 
         <div
           className="tab-content"
@@ -67,6 +69,7 @@ const OverView = () => {
                 ))
             : null}
         </div>
+        {/* tab-3 */}
 
         <div
           className="tab-content"
@@ -86,6 +89,8 @@ const OverView = () => {
                 ))
             : null}
         </div>
+        {/* tab-4 */}
+
         <div
           className="tab-content"
           style={{ display: activeTab === "tab4" ? "block" : "none" }}

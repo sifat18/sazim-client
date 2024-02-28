@@ -40,6 +40,7 @@ export const Login = () => {
       });
     },
   });
+  // setting user data to local storage and redux store
   useEffect(() => {
     if (!loading && data?.signin?.id) {
       localStorage.setItem("data", JSON.stringify(data?.signin));

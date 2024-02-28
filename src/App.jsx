@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
-
+  // checking if user is already logged in
   useEffect(() => {
     if (localStorage.getItem("data")) {
       const user = JSON.parse(localStorage.getItem("data"));

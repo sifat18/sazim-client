@@ -9,7 +9,7 @@ import DefaultInput from "../common/DefaultInput";
 import { gql, useMutation } from "@apollo/client";
 import { useSelector } from "react-redux";
 import { ADD_TRANSACTOION } from "./apiHelper";
-
+// btn inputs
 const inputs = [
   {
     name: "fromDate",
@@ -97,6 +97,7 @@ export const ProductView = () => {
             }}
           />
         </div>
+        {/* buy */}
         <div>
           <PrimaryButton
             label={"Buy"}
@@ -129,6 +130,7 @@ export const ProductView = () => {
           />
         </div>
       </div>
+      {/* for rent */}
       <CommonDialog
         propsObj={{
           open,
