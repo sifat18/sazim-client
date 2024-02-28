@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PrimaryButton from "../common/PrimaryButton";
 import IConfirmModal from "../common/IConfirmModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import CommonDialog from "../common/CommonDialog";
 import DefaultInput from "../common/DefaultInput";
+import { gql, useMutation } from "@apollo/client";
+import { useSelector } from "react-redux";
 
 const inputs = [
   {
@@ -20,7 +22,44 @@ const inputs = [
 
 export const ProductView = () => {
   let location = useLocation();
+  const navigate = useNavigate();
+
+  const { id } = useSelector((state) => state.auth);
+  console.log({ id });
+  const { product } = location.state;
+
+  const ADD_TRANSACTOION = gql`
+    mutation Mutation(
+      $userId: Int!
+      $productId: Int!
+      $type: String!
+      $fromDate: String
+      $toDate: String
+    ) {
+      addTransaction(
+        userId: $userId
+        productId: $productId
+        type: $type
+        fromDate: $fromDate
+        toDate: $toDate
+      ) {
+        id
+        user {
+          id
+          email
+          firstName
+          products {
+            id
+            title
+            price
+          }
+        }
+      }
+    }
+  `;
   const [open, setOpen] = useState(false);
+  const [addTransaction, { data, loading, error }] =
+    useMutation(ADD_TRANSACTOION);
 
   const {
     setFieldValue,
@@ -38,15 +77,28 @@ export const ProductView = () => {
     },
     onSubmit: (values) => {
       console.log("Form submitted with values:", values);
+
       // Handle form submission logic here
     },
   });
-  const { product } = location.state;
 
   const submitHandler = () => {
-    console.log(values);
+    addTransaction({
+      variables: {
+        userId: id,
+        productId: product.id,
+        type: "Lend",
+        fromDate: values.fromDate,
+        toDate: values.toDate,
+      },
+    });
     setOpen(false);
   };
+  useEffect(() => {
+    if (!loading && data?.addTransaction?.id) {
+      navigate("/overview");
+    }
+  }, [loading, data]);
   return (
     <form className="w-25 m-auto ">
       <h2 className="mt-5 pt-5">{product?.title}</h2>
@@ -84,6 +136,13 @@ export const ProductView = () => {
                 message: "Are you sure you want to Buy this product?",
                 yesAlertFunc: () => {
                   // const payload = { }
+                  addTransaction({
+                    variables: {
+                      userId: id,
+                      productId: product.id,
+                      type: "Bought",
+                    },
+                  });
                 },
                 noAlertFunc: () => {},
               };

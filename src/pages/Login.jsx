@@ -57,6 +57,7 @@ export const Login = () => {
   });
   useEffect(() => {
     if (!loading && data?.signin?.id) {
+      localStorage.setItem("data", JSON.stringify(data?.signin));
       dispatch(
         setUser({
           name: data?.signin?.firstName + " " + data?.signin?.lastName,
