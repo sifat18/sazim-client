@@ -4,30 +4,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Products } from "../common/Products";
 import PrimaryButton from "../common/PrimaryButton";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { GET_PRODUCTS } from "./apiHelper";
 
 export const AllProducts = () => {
   const navigate = useNavigate();
-  const GET_PRODUCTS = gql`
-    query Query {
-      products {
-        id
-        title
-        price
-        rent
-        rentType {
-          id
-          label
-        }
-        description
-        createdAt
-        categories {
-          id
-          name
-        }
-      }
-    }
-  `;
+
   const { loading, error, data } = useQuery(GET_PRODUCTS);
 
   const click = (item) => {

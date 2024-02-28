@@ -1,15 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { BorderLayout } from "../common/BorderLayout";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import DefaultInput from "../common/DefaultInput";
 import PrimaryButton from "../common/PrimaryButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FormikSelect } from "../common/FormikSelect";
 import { gray600, success500 } from "../utility/customColor";
 import { customStyles } from "./../utility/selectCustomStyle";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
+import { EDIT, GET_Categories, GET_Rentyps } from "./apiHelper";
+import { productValidationSchema } from "./validationHelper";
 export const EditProduct = () => {
   const navigate = useNavigate();
   let location = useLocation();
@@ -18,63 +19,6 @@ export const EditProduct = () => {
 
   const { product } = location.state;
 
-  const validationSchema = yup.object().shape({
-    rent: yup.number().required("Rent  is required"),
-    categories: yup.array().of(
-      yup.object().shape({
-        label: yup.string().required("Categories is required"),
-        value: yup.string().required("Categories is required"),
-      })
-    ),
-    title: yup.string().required("Title is required"),
-    price: yup.number().required("Price is required"),
-    description: yup.string().required("description is required"),
-    dayType: yup.object().shape({
-      label: yup.string().required("dayType is required"),
-      value: yup.string().required("dayType is required"),
-    }),
-  });
-  const GET_Categories = gql`
-    query Query {
-      categories {
-        id
-        name
-      }
-    }
-  `;
-  const GET_Rentyps = gql`
-    query Query {
-      rentypes {
-        id
-        label
-      }
-    }
-  `;
-
-  const EDIT = gql`
-    mutation Mutation(
-      $productId: Int!
-      $title: String
-      $description: String
-      $rent: Float
-      $price: Float
-      $rentTypeId: Int
-      $categoryIds: [Int!]
-    ) {
-      updateProduct(
-        productId: $productId
-        title: $title
-        description: $description
-        rent: $rent
-        price: $price
-        rentTypeId: $rentTypeId
-        categoryIds: $categoryIds
-      ) {
-        id
-        title
-      }
-    }
-  `;
   const { data } = useQuery(GET_Categories);
   const { data: Rentyps } = useQuery(GET_Rentyps);
   const [edit, { data: editData, loading, error }] = useMutation(EDIT);
@@ -89,7 +33,7 @@ export const EditProduct = () => {
     setValues,
   } = useFormik({
     enableReinitialize: true,
-    validationSchema: validationSchema,
+    validationSchema: productValidationSchema,
     initialValues: {
       rent: product?.rent,
       categories: product?.categories?.map((item, index) => {

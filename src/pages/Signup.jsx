@@ -9,64 +9,12 @@ import { gql, useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/aurth/authSlice";
+import { SIGN_UP } from "./apiHelper";
+import { registerValidationSchema } from "./validationHelper";
 
 export const Signup = () => {
   const navigate = useNavigate();
 
-  const SIGN_UP = gql`
-    mutation SignUp(
-      $email: String!
-      $firstName: String!
-      $lastName: String!
-      $password: String!
-    ) {
-      signUp(
-        email: $email
-        firstName: $firstName
-        lastName: $lastName
-        password: $password
-      ) {
-        id
-        email
-        firstName
-        lastName
-        password
-        createdAt
-      }
-    }
-  `;
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
-  const validationSchema = yup.object({
-    email: yup
-      .string()
-      .email("Invalid email address")
-      .required("Email is required"),
-    password: yup
-      .string()
-      .required("Please enter your password")
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-        "Password must contain 8 characters, one uppercase, one lowercase, one number and one special case Character"
-      ),
-    confirmPassword: yup
-      .string()
-      .required("Please enter the password again")
-      .oneOf(
-        [yup.ref("password"), "Confirm Password is required"],
-        "Passwords didn't match"
-      ),
-    firstName: yup.string().required("First Name is required"),
-    lastName: yup.string().required("Last Name is required"),
-    phone: yup
-      .string()
-      .matches(
-        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-        "Phone number is not valid"
-      )
-      .required("Phone number is required"),
-  });
   const [signup, { data, loading, error }] = useMutation(SIGN_UP);
   const dispatch = useDispatch();
 
@@ -80,7 +28,7 @@ export const Signup = () => {
     setValues,
   } = useFormik({
     enableReinitialize: true,
-    validationSchema: validationSchema,
+    validationSchema: registerValidationSchema,
     initialValues: {
       email: "",
       password: "",

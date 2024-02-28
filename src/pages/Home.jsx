@@ -4,40 +4,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Products } from "../common/Products";
 import PrimaryButton from "../common/PrimaryButton";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/features/aurth/authSlice";
+import { GET_USER_PRODUCTS } from "./apiHelper";
 
 export const Home = () => {
   const { id } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const GET_PRODUCTS = gql`
-    query User($userId: Int!) {
-      user(id: $userId) {
-        products {
-          id
-          title
-          price
-          rent
-          description
-          createdAt
-          categories {
-            id
-            name
-          }
-          rentType {
-            id
-            label
-          }
-        }
-      }
-    }
-  `;
-
-  const { loading, error, data } = useQuery(GET_PRODUCTS, {
-    variables: { userId: id }, // Pass the user ID as a variable
+  const { loading, error, data } = useQuery(GET_USER_PRODUCTS, {
+    variables: { userId: id },
   });
 
   const click = (item) => {

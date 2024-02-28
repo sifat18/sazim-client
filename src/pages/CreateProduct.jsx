@@ -1,34 +1,19 @@
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+
 import DefaultInput from "../common/DefaultInput";
 import PrimaryButton from "../common/PrimaryButton";
 import { FormikSelect } from "../common/FormikSelect";
 import { gray600, success500 } from "../utility/customColor";
 import { customStyles } from "./../utility/selectCustomStyle";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
+import { ADD_PRODUCT, GET_Categories, GET_Rentyps } from "./apiHelper";
+import { productValidationSchema } from "./validationHelper";
 
 const steps = ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
-
-const validationSchema = Yup.object().shape({
-  rent: Yup.number().required("Rent  is required"),
-  categories: Yup.array().of(
-    Yup.object().shape({
-      label: Yup.string().required("Categories is required"),
-      value: Yup.string().required("Categories is required"),
-    })
-  ),
-  title: Yup.string().required("Title is required"),
-  price: Yup.number().required("Price is required"),
-  description: Yup.string().required("description is required"),
-  dayType: Yup.object().shape({
-    label: Yup.string().required("dayType is required"),
-    value: Yup.string().required("dayType is required"),
-  }),
-});
 
 export const CreateProduct = () => {
   const { id } = useSelector((state) => state.auth);
@@ -38,63 +23,7 @@ export const CreateProduct = () => {
   const [categories, setCategories] = useState([]);
   const [rentTypes, setRentTypes] = useState([]);
   const navigate = useNavigate();
-  const ADD_PRODUCT = gql`
-    mutation CreateProduct(
-      $title: String!
-      $price: Float!
-      $rent: Float!
-      $rentId: Int!
-      $description: String!
-      $categoryIds: [Int!]!
-      $createdBy: Int!
-    ) {
-      createProduct(
-        title: $title
-        price: $price
-        rent: $rent
-        rentId: $rentId
-        description: $description
-        categoryIds: $categoryIds
-        createdBy: $createdBy
-      ) {
-        id
-        title
-        price
-        rent
-        rentType {
-          id
-          label
-        }
-        description
-        createdAt
-        user {
-          id
-          email
-        }
-        categories {
-          id
-          name
-        }
-      }
-    }
-  `;
 
-  const GET_Categories = gql`
-    query Query {
-      categories {
-        id
-        name
-      }
-    }
-  `;
-  const GET_Rentyps = gql`
-    query Query {
-      rentypes {
-        id
-        label
-      }
-    }
-  `;
   const { data } = useQuery(GET_Categories);
   const { data: Rentyps } = useQuery(GET_Rentyps);
   const [addproduct, { data: Product }] = useMutation(ADD_PRODUCT);
@@ -118,9 +47,8 @@ export const CreateProduct = () => {
       description: "",
       dayType: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: productValidationSchema,
     onSubmit: (values) => {
-      console.log("Form submitted with values:", values);
       // Handle form submission logic here
       addproduct({
         variables: {

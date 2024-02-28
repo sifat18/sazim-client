@@ -3,7 +3,8 @@ import { useState } from "react";
 import { BorderLayout } from "./BorderLayout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IConfirmModal from "./IConfirmModal";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { DELETE_PRODUCT } from "../pages/apiHelper";
 
 export const Products = ({
   item,
@@ -13,14 +14,7 @@ export const Products = ({
 }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const options = { day: "2-digit", month: "short", year: "numeric" };
-  const DELETE_PRODUCT = gql`
-    mutation Mutation($productId: Int!) {
-      deleteProduct(productId: $productId) {
-        id
-        title
-      }
-    }
-  `;
+
   const [removeProduct] = useMutation(DELETE_PRODUCT);
 
   return (

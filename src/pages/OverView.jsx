@@ -3,39 +3,17 @@ import PrimaryButton from "../common/PrimaryButton";
 import { Products } from "../common/Products";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { GET_TRANSACTION_PRODUCTS } from "./apiHelper";
 
 const OverView = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const navigate = useNavigate();
   const { id } = useSelector((state) => state.auth);
-  const GET_PRODUCTS = gql`
-    query Query($userId: Int!) {
-      transactionByUser(userId: $userId) {
-        id
-        product {
-          title
-          id
-          price
-          rent
-          description
-          rentType {
-            id
-            label
-          }
-          categories {
-            id
-            name
-          }
-        }
-        type
-      }
-    }
-  `;
-  const { data } = useQuery(GET_PRODUCTS, {
+
+  const { data } = useQuery(GET_TRANSACTION_PRODUCTS, {
     variables: { userId: id },
   });
-  console.log({ data });
   const openTab = (tabId) => {
     setActiveTab(tabId);
   };
@@ -44,8 +22,8 @@ const OverView = () => {
   };
 
   return (
-    <div className="tab-container">
-      <div className="tab-header row">
+    <div>
+      <div className="row w-100 ">
         <PrimaryButton
           label={"Bought"}
           type={"button"}

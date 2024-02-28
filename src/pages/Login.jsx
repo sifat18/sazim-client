@@ -5,32 +5,17 @@ import * as yup from "yup";
 import DefaultInput from "../common/DefaultInput";
 import PrimaryButton from "../common/PrimaryButton";
 import { useNavigate } from "react-router-dom";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/aurth/authSlice";
 import { useEffect } from "react";
+import { SIGN_IN } from "./apiHelper";
+import { loginValidationSchema } from "./validationHelper";
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const validationSchema = yup.object({
-    email: yup
-      .string()
-      .email("Invalid email address")
-      .required("Email is required"),
-    password: yup.string().required("Password is required"),
-  });
-  const SIGN_IN = gql`
-    mutation Signin($email: String!, $password: String!) {
-      signin(email: $email, password: $password) {
-        id
-        email
-        firstName
-        lastName
-      }
-    }
-  `;
   const [signin, { data, loading, error }] = useMutation(SIGN_IN);
 
   const {
@@ -43,7 +28,7 @@ export const Login = () => {
     setValues,
   } = useFormik({
     enableReinitialize: true,
-    validationSchema: validationSchema,
+    validationSchema: loginValidationSchema,
     initialValues: {
       email: "",
       password: "",

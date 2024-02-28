@@ -8,6 +8,7 @@ import CommonDialog from "../common/CommonDialog";
 import DefaultInput from "../common/DefaultInput";
 import { gql, useMutation } from "@apollo/client";
 import { useSelector } from "react-redux";
+import { ADD_TRANSACTOION } from "./apiHelper";
 
 const inputs = [
   {
@@ -25,38 +26,8 @@ export const ProductView = () => {
   const navigate = useNavigate();
 
   const { id } = useSelector((state) => state.auth);
-  console.log({ id });
   const { product } = location.state;
 
-  const ADD_TRANSACTOION = gql`
-    mutation Mutation(
-      $userId: Int!
-      $productId: Int!
-      $type: String!
-      $fromDate: String
-      $toDate: String
-    ) {
-      addTransaction(
-        userId: $userId
-        productId: $productId
-        type: $type
-        fromDate: $fromDate
-        toDate: $toDate
-      ) {
-        id
-        user {
-          id
-          email
-          firstName
-          products {
-            id
-            title
-            price
-          }
-        }
-      }
-    }
-  `;
   const [open, setOpen] = useState(false);
   const [addTransaction, { data, loading, error }] =
     useMutation(ADD_TRANSACTOION);
