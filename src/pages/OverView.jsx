@@ -131,6 +131,7 @@ const OverView = () => {
                   <Products
                     item={product?.product}
                     key={product?.product?.title}
+                    showInfo={false}
                     click={click}
                   />
                 ))
@@ -149,6 +150,7 @@ const OverView = () => {
                   <Products
                     item={product?.product}
                     key={product?.product?.title}
+                    showInfo={false}
                     click={click}
                   />
                 ))
@@ -166,6 +168,7 @@ const OverView = () => {
                   <Products
                     item={product?.product}
                     key={product?.product?.title}
+                    showInfo={false}
                     click={click}
                   />
                 ))

@@ -6,7 +6,6 @@ import { setUser } from "./redux/features/aurth/authSlice";
 import { Outlet } from "react-router-dom";
 
 function App() {
-  // const [count, setCount] = useState(0)
   const dispatch = useDispatch();
 
   useEffect(() => {

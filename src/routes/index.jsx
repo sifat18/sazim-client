@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
-// import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { Signup } from "../pages/Signup";
 import App from "../App";
 import NotFound from "../pages/NotFound";
 import { Home } from "../pages/Home";
 import { CreateProduct } from "../pages/CreateProduct";
-import {EditProduct} from "../pages/EditProduct";
+import { EditProduct } from "../pages/EditProduct";
 import { AllProducts } from "../pages/AllProducts";
 import { ProductView } from "../pages/ProductView";
 import OverView from "../pages/OverView";
+import PrivateRoute from "../common/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -18,11 +18,19 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/All",
-        element: <AllProducts />,
+        element: (
+          <PrivateRoute>
+            <AllProducts />
+          </PrivateRoute>
+        ),
       },
 
       {
@@ -35,19 +43,35 @@ export const router = createBrowserRouter([
       },
       {
         path: "/overview",
-        element: <OverView />,
+        element: (
+          <PrivateRoute>
+            <OverView />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/create-product",
-        element: <CreateProduct />,
+        element: (
+          <PrivateRoute>
+            <CreateProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/edit/:productName",
-        element: <EditProduct />,
+        element: (
+          <PrivateRoute>
+            <EditProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/buy-rent/:productName",
-        element: <ProductView />,
+        element: (
+          <PrivateRoute>
+            <ProductView />
+          </PrivateRoute>
+        ),
       },
     ],
   },
