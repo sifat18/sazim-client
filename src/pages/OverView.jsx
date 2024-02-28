@@ -32,8 +32,8 @@ const OverView = () => {
       }
     }
   `;
-  const { loading, error, data } = useQuery(GET_PRODUCTS, {
-    variables: { userId: id }, // Pass the user ID as a variable
+  const { data } = useQuery(GET_PRODUCTS, {
+    variables: { userId: id },
   });
   console.log({ data });
   const openTab = (tabId) => {
