@@ -1,6 +1,8 @@
 import * as yup from "yup";
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+// for product schema
+
 export const productValidationSchema = yup.object().shape({
   rent: yup.number().required("Rent  is required"),
   categories: yup.array().of(
@@ -17,6 +19,8 @@ export const productValidationSchema = yup.object().shape({
     value: yup.string().required("dayType is required"),
   }),
 });
+// for login schema
+
 export const loginValidationSchema = yup.object({
   email: yup
     .string()
@@ -24,7 +28,7 @@ export const loginValidationSchema = yup.object({
     .required("Email is required"),
   password: yup.string().required("Password is required"),
 });
-
+// for register schema
 export const registerValidationSchema = yup.object({
   email: yup
     .string()

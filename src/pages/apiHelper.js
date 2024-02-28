@@ -1,5 +1,38 @@
 import { gql } from "@apollo/client";
-
+// auth api
+export const SIGN_IN = gql`
+  mutation Signin($email: String!, $password: String!) {
+    signin(email: $email, password: $password) {
+      id
+      email
+      firstName
+      lastName
+    }
+  }
+`;
+export const SIGN_UP = gql`
+  mutation SignUp(
+    $email: String!
+    $firstName: String!
+    $lastName: String!
+    $password: String!
+  ) {
+    signUp(
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      password: $password
+    ) {
+      id
+      email
+      firstName
+      lastName
+      password
+      createdAt
+    }
+  }
+`;
+// product
 export const GET_PRODUCTS = gql`
   query Query {
     products {
@@ -60,7 +93,14 @@ export const ADD_PRODUCT = gql`
     }
   }
 `;
-
+export const DELETE_PRODUCT = gql`
+  mutation Mutation($productId: Int!) {
+    deleteProduct(productId: $productId) {
+      id
+      title
+    }
+  }
+`;
 export const GET_Categories = gql`
   query Query {
     categories {
@@ -101,6 +141,7 @@ export const EDIT = gql`
     }
   }
 `;
+// user api
 export const GET_USER_PRODUCTS = gql`
   query User($userId: Int!) {
     user(id: $userId) {
@@ -123,16 +164,7 @@ export const GET_USER_PRODUCTS = gql`
     }
   }
 `;
-export const SIGN_IN = gql`
-  mutation Signin($email: String!, $password: String!) {
-    signin(email: $email, password: $password) {
-      id
-      email
-      firstName
-      lastName
-    }
-  }
-`;
+
 export const GET_TRANSACTION_PRODUCTS = gql`
   query Query($userId: Int!) {
     transactionByUser(userId: $userId) {
@@ -156,6 +188,7 @@ export const GET_TRANSACTION_PRODUCTS = gql`
     }
   }
 `;
+// transaction api
 export const ADD_TRANSACTOION = gql`
   mutation Mutation(
     $userId: Int!
@@ -182,36 +215,6 @@ export const ADD_TRANSACTOION = gql`
           price
         }
       }
-    }
-  }
-`;
-export const SIGN_UP = gql`
-  mutation SignUp(
-    $email: String!
-    $firstName: String!
-    $lastName: String!
-    $password: String!
-  ) {
-    signUp(
-      email: $email
-      firstName: $firstName
-      lastName: $lastName
-      password: $password
-    ) {
-      id
-      email
-      firstName
-      lastName
-      password
-      createdAt
-    }
-  }
-`;
-export const DELETE_PRODUCT = gql`
-  mutation Mutation($productId: Int!) {
-    deleteProduct(productId: $productId) {
-      id
-      title
     }
   }
 `;

@@ -52,7 +52,6 @@ export const EditProduct = () => {
     },
     onSubmit: (values) => {
       // Handle form submission logic here
-      console.log("Form submitted with values:", values);
       edit({
         variables: {
           productId: product?.id,

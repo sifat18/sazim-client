@@ -16,18 +16,17 @@ import { productValidationSchema } from "./validationHelper";
 const steps = ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
 
 export const CreateProduct = () => {
+  // user  fetch
   const { id } = useSelector((state) => state.auth);
-  console.log({ id });
-
+  // state
   const [currentStep, setCurrentStep] = useState(0);
   const [categories, setCategories] = useState([]);
   const [rentTypes, setRentTypes] = useState([]);
+  // routing
   const navigate = useNavigate();
-
   const { data } = useQuery(GET_Categories);
   const { data: Rentyps } = useQuery(GET_Rentyps);
   const [addproduct, { data: Product }] = useMutation(ADD_PRODUCT);
-  console.log({ Product });
   const {
     setFieldValue,
     values,
@@ -71,6 +70,7 @@ export const CreateProduct = () => {
   const handlePrev = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
+  // select fields options set
   useEffect(() => {
     if (data?.categories?.length > 0) {
       setCategories(
@@ -96,9 +96,8 @@ export const CreateProduct = () => {
 
   return (
     <div className="w-25 mx-auto">
-      {/* <BorderLayout width={25}> */}
-
       <form onSubmit={handleSubmit}>
+        {/* step 1 */}
         {currentStep === 0 && (
           <>
             <h4 className="text-center " style={{ paddingTop: "7rem" }}>
@@ -119,6 +118,8 @@ export const CreateProduct = () => {
             />
           </>
         )}
+        {/* step 2 */}
+
         {currentStep === 1 && (
           <>
             <h4 className="text-center " style={{ paddingTop: "7rem" }}>
@@ -174,6 +175,7 @@ export const CreateProduct = () => {
             />
           </>
         )}
+        {/* step 3 */}
         {currentStep === 2 && (
           <>
             <h4 className="text-center " style={{ paddingTop: "7rem" }}>
@@ -194,6 +196,7 @@ export const CreateProduct = () => {
             />
           </>
         )}
+        {/* step 4 */}
         {currentStep === 3 && (
           <>
             <h4 className="text-center " style={{ paddingTop: "7rem" }}>
@@ -246,7 +249,7 @@ export const CreateProduct = () => {
             </div>
           </>
         )}
-
+        {/* step 5 */}
         {currentStep === 4 && (
           <>
             <h4 className="text-center " style={{ paddingTop: "7rem" }}>
@@ -284,6 +287,7 @@ export const CreateProduct = () => {
             }}
           />
         )}
+        {/* next btn */}
         {currentStep < steps.length - 1 && (
           <div
             style={{
@@ -305,6 +309,7 @@ export const CreateProduct = () => {
             />
           </div>
         )}
+        {/* submit btn */}
         {currentStep === steps.length - 1 && (
           <div
             style={{
