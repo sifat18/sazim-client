@@ -1,8 +1,16 @@
-# React + Vite
+### How to run
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- clone the repository to your local machine
+- run npm i
+- after installation run npm run dev
+- the client side is running -[server](https://github.com/sifat18/sazim-backend)
+- [server_docker](https://hub.docker.com/r/ibnsifat/teebay-back)
+- expose port 4000 in localhost
 
-Currently, two official plugins are available:
+### docker pull ibnsifat/teebay-back
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [client_docker](https://hub.docker.com/r/ibnsifat/teebay-client)
+
+### docker pull ibnsifat/teebay-client
+
+- expose port 3000 in localhost
